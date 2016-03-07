@@ -1,0 +1,8 @@
+#Python + C ftdi control 
+http://blog.codedstructure.net/2010/05/let-there-be-leds.html
+http://blog.codedstructure.net/2010/05/outside-world.html
+
+# USB configurations
+
+http://www.sealevel.com/support/article/AA-00524/0/How-to-configure-USB-serial-adapters-in-Linux.html
+

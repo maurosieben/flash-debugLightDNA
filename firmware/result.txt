@@ -1,0 +1,2 @@
+lrwxrwxrwx 1 root root 0 Fev 29 08:15 ttyUSB1 -> ../../../devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.2/1-1.2:1.0/ttyUSB1
+lrwxrwxrwx 1 root root 0 Fev 29 08:29 ttyUSB0 -> ../../../devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.2/2-1.2:1.0/ttyUSB0

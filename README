@@ -1,0 +1,13 @@
+Foi criado uma regra no udev/rules.d para que ao conectar um determinado FTDI ele fosse redirecionado a um ttyLDNA*
+
+A seleção ocorre através do serial number do ftdi que  pode ser optido por: sudo lsusb -v -d 0403:6001
+Após capturar o serial number é só alterar o arquivo LightDNAProgrammer.rules com o serial capturado.
+ex: iserial = 0555 -> no arquivo alterar: ATTRS{serial}=="0555"
+
+
+executar:
+#sudo cp LightDNAProgrammer.rules /etc/udev/rules.d/
+#sudo chmod a+r /etc/udev/rules.d/LightDNAProgrammer
+sudo udevadm control --reload-rules
+sudo service udev restart
+sudo udevadm trigger
