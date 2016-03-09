@@ -1,4 +1,3 @@
 /dev/ttyLDNA1
 /dev/ttyLDNA2
 /dev/ttyLDNA3
-/dev/ttyLDNAC
