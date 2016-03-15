@@ -1,10 +1,7 @@
-import sys
-import random
-import os, subprocess
+import sys, serial, random, os, subprocess, time, io
 from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import QThread
+from PyQt4.QtCore import QThread, QMutex
 from main_flash import Ui_Dialog
-import time
 
 count = 0
 red ="\033[1;31;40m"
@@ -12,6 +9,11 @@ green = "\033[1;32;40m"
 normal = "\033[0;37;40m"
 
 prog_dir = os.path.dirname(os.path.abspath(__file__))
+
+ser =  serial.Serial('/dev/ttyLDNAC1')
+ser.baudrate = 115200
+#ser.open()
+sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 
 class MyDialog(QtGui.QDialog):
     def __init__(self, parent=None):
@@ -94,6 +96,9 @@ class MyDialog(QtGui.QDialog):
 class Threadled(QThread):
     def __init__(self,tid,name,counter):
         QThread.__init__(self)
+        
+        global sio
+        self.mutex = QMutex()
         self.tid = tid
         self.name = name
         self.counter = counter
@@ -109,9 +114,14 @@ class Threadled(QThread):
         self.flashMSP()
         return
     
-    def flashESP(self):        
+    def flashESP(self):
+        self.mutex.lock()
+        msg =  "\r\nW000%d-100" %self.tid
+        sio.write(unicode(msg))
+        sio.flush() 
+        print msg
         self.process = subprocess.Popen("sh %s/firmware/program.sh %s &" %(prog_dir, self.name), stderr= subprocess.PIPE,stdout= subprocess.PIPE,shell=True)
-        
+        self.mutex.unlock()
         # get standard and error output in a variable
         out, err = self.process.communicate()
 
@@ -135,6 +145,12 @@ class Threadled(QThread):
                     
     def flashMSP(self):            
         msp_status = bool(random.getrandbits(1))
+        self.mutex.lock()
+        msg =  "\r\nW000%d-000" %self.tid
+        sio.write(unicode(msg))
+        sio.flush() 
+        print msg
+        self.mutex.unlock()
         time.sleep(3)
         if msp_status is True: 
             self.counter += 1

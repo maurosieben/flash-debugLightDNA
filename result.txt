@@ -1,5 +1,4 @@
-/dev/ttyLDNA1
-/dev/ttyLDNA2
 /dev/ttyLDNA4
 /dev/ttyLDNA5
 /dev/ttyLDNA6
+/dev/ttyLDNAC1
